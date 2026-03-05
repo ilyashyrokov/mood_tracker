@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mood_tracker/screens/settings_screen.dart';
 import 'package:mood_tracker/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +21,18 @@ void main() async {
   }
 
   await HiveService.init();
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const MyApp(),
-    ),
-  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) {
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: const MyApp(),
+      ),
+    );
+  });
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
